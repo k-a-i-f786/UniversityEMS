@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EMS - University Examination System</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    
+
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --secondary: #f59e0b;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --gray: #94a3b8;
+      --success: #10b981;
+    }
+
+     * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5)), 
+                  url('ww.jpeg');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    .topbar {
+      background: var(--primary-dark);
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .topbar-right {
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+    
+    .topbar-link {
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .topbar-link:hover {
+      color: var(--secondary);
+    }
+    
+    .notification-icon {
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .notification-icon:hover {
+      color: var(--secondary);
+      transform: scale(1.1);
+    }
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                  url('https://images.unsplash.com/photo-1584697964194-933ce1e3d2fc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+      background-size: cover;
+      background-position: center;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      animation: fadeIn 1s ease-out;
+    }
+    
+    .hero-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+    
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
+    
+    .btn {
+      padding: 0.75rem 1.75rem;
+      border-radius: 0.375rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+    
+    .btn-primary {
+      background-color: var(--secondary);
+      color: var(--dark);
+    }
+    
+    .btn-primary:hover {
+      background-color: #eab308;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn-secondary {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+      position: relative;
+    }
+    
+    .section-title h2 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: var(--dark);
+      display: inline-block;
+    }
+    
+    .section-title h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background-color: var(--secondary);
+      border-radius: 2px;
+    }
+    
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .feature-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 2rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      border-top: 4px solid var(--primary);
+      text-align: center;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .feature-icon {
+      font-size: 2.5rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+    
+    .feature-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+    
+    .feature-desc {
+      color: var(--gray);
+    }
+    
+    /* Stats Section */
+    .stats {
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      color: white;
+      padding: 5rem 0;
+      text-align: center;
+    }
+    
+    .stats-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .stat-item {
+      padding: 1.5rem;
+    }
+    
+    .stat-number {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: var(--secondary);
+    }
+    
+    .stat-label {
+      font-size: 1.125rem;
+      opacity: 0.9;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 4rem 0 2rem;
+    }
+    
+    .footer-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-logo-icon {
+      font-size: 1.5rem;
+      color: var(--secondary);
+    }
+    
+    .footer-logo-text {
+      font-size: 1.25rem;
+      font-weight: 700;
+    }
+    
+    .footer-about {
+      margin-bottom: 1.5rem;
+      opacity: 0.8;
+    }
+    
+    .footer-social {
+      display: flex;
+      gap: 1rem;
+    }
+    
+    .footer-social a {
+      color: white;
+      font-size: 1.25rem;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-social a:hover {
+      color: var(--secondary);
+      transform: translateY(-3px);
+    }
+    
+    .footer-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    
+    .footer-title::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background-color: var(--secondary);
+    }
+    
+    .footer-links {
+      list-style: none;
+    }
+    
+    .footer-links li {
+      margin-bottom: 0.75rem;
+    }
+    
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer-links a:hover {
+      color: var(--secondary);
+      padding-left: 5px;
+    }
+    
+    .footer-contact-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    .footer-contact-icon {
+      color: var(--secondary);
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.7;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      
+      .hero-title {
+        font-size: 2.25rem;
+      }
+      
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      
+      .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+   <div class="topbar">
+    <div><strong>UEMS - Dashboard</strong></div>
+    <div class="topbar-right">
+      
+      <a href="Home.html" class="topbar-link"><i class="fas fa-home"></i> <span>Home</span></a>
+      <a href="about.html" class="topbar-link"><i class="fas fa-info-circle"></i> <span>About</span></a>
+      <a href="#" class="topbar-link"><i class="fas fa-envelope"></i> <span>Contact</span></a>
+      <i class="fas fa-bell notification-icon" title="Notifications"></i>
+      <a href="#" class="topbar-link"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">Revolutionizing University Examinations</h1>
+      <p class="hero-subtitle">A comprehensive digital solution for managing all aspects of university examinations with efficiency, security, and transparency.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn btn-primary">Get Started</a>
+        <a href="#" class="btn btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- User Roles Section -->
+  <section class="container">
+    <div class="section-title">
+      <h2>Access Portal</h2>
+    </div>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
+        <h3 class="feature-title">Teacher</h3>
+        <p class="feature-desc">Create exams, manage questions, and evaluate student performance with our comprehensive teacher portal.</p>
+        <a href="progr.html" class="btn btn-primary" style="margin-top: 1rem;">Teacher Login</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-user-graduate"></i>
+        </div>
+        <h3 class="feature-title">Student</h3>
+        <p class="feature-desc">Take exams, view results, and track your academic progress through our student-friendly interface.</p>
+        <a href="Student_Login.html" class="btn btn-primary" style="margin-top: 1rem;">Student Login</a>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-user-shield"></i>
+        </div>
+        <h3 class="feature-title">Admin</h3>
+        <p class="feature-desc">Manage the entire examination system, user accounts, and system configurations with admin privileges.</p>
+        <a href="adminLogin.html" class="btn btn-primary" style="margin-top: 1rem;">Admin Login</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <div class="footer-col">
+        <div class="footer-logo">
+          <div class="footer-logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="footer-logo-text">EMS</div>
+        </div>
+        <p class="footer-about">
+          The Examination Management System (EMS) is a comprehensive digital platform designed to streamline university examination processes with maximum efficiency and security.
+        </p>
+        <div class="footer-social">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-title">Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-title">Services</h3>
+        <ul class="footer-links">
+          <li><a href="#">Exam Scheduling</a></li>
+          <li><a href="#">Result Processing</a></li>
+          <li><a href="#">Student Portal</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h3 class="footer-title">Contact Us</h3>
+        <div class="footer-contact-item">
+          <i class="fas fa-map-marker-alt footer-contact-icon"></i>
+          <span>123 University Avenue, Education City</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fas fa-phone-alt footer-contact-icon"></i>
+          <span>+1 (555) 123-4567</span>
+        </div>
+        <div class="footer-contact-item">
+          <i class="fas fa-envelope footer-contact-icon"></i>
+          <span>info@ems-university.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="copyright">
+      &copy; 2025 Examination Management System. All rights reserved.
+    </div>
+  </footer>
+</body>
+</html>
