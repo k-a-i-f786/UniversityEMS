@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Portal | University Examination System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .topbar {
+            background: var(--primary-dark);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .topbar-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .topbar-link {
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .topbar-link:hover {
+            color: var(--secondary);
+        }
+
+        .notification-icon {
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            color: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 60px; /* Account for fixed topbar */
+        }
+
+        .sidebar {
+            width: 280px;
+            background: white;
+            padding: 1.5rem;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+            position: fixed;
+            height: calc(100vh - 60px);
+            overflow-y: auto;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 2rem;
+            background-color: #f5f7fa;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-top: 4px solid var(--primary);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--primary);
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #e2e8f0;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .card h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 80px;
+            height: 2px;
+            background-color: var(--secondary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+        }
+
+        table, th, td {
+            border: 1px solid #e2e8f0;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #0d9488;
+            transform: translateY(-2px);
+        }
+
+        .sidebar-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .sidebar-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-list li {
+            margin-bottom: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+
+        .sidebar-list a {
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sidebar-list a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+
+        .sidebar-list a i {
+            color: var(--secondary);
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        form input[type="text"],
+        form input[type="date"],
+        form input[type="number"],
+        form select,
+        form textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.375rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        form input[type="text"]:focus,
+        form input[type="date"]:focus,
+        form input[type="number"]:focus,
+        form select:focus,
+        form textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        form textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .badge-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .badge-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation Bar -->
+    <div class="topbar">
+        <div><strong><i class="fas fa-graduation-cap"></i> University Examination System</strong></div>
+        <div class="topbar-right">
+            <div class="user-info">
+                <span>Welcome, Dr. Smith</span>
+                <small>Department of Computer Science</small>
+            </div>
+            <i class="fas fa-bell notification-icon" title="Notifications"></i>
+            <a href="#logout" class="topbar-link"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3 class="sidebar-title">Quick Actions</h3>
+            <ul class="sidebar-list">
+                <li><a href="exam.html"><i class="fas fa-plus-circle"></i> Create New Exam</a></li>
+                <li><a href="#add-question"><i class="fas fa-question-circle"></i> Add Question</a></li>
+                <li><a href="#grade-papers"><i class="fas fa-check-circle"></i> Grade Papers</a></li>
+                <li><a href="#view-results"><i class="fas fa-chart-bar"></i> View Results</a></li>
+            </ul>
+
+            <h3 class="sidebar-title">Upcoming Exams</h3>
+            <ul class="sidebar-list">
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Midterm - CS101 (Mar 15)</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Final - CS201 (Apr 20)</a></li>
+                <li><a href="#"><i class="fas fa-calendar-alt"></i> Quiz - CS301 (Mar 25)</a></li>
+            </ul>
+
+            <h3 class="sidebar-title">Pending Grading</h3>
+            <ul class="sidebar-list">
+                <li><a href="#"><i class="fas fa-clipboard-check"></i> Assignment 1 - CS101 (15)</a></li>
+                <li><a href="#"><i class="fas fa-clipboard-check"></i> Lab Report - CS201 (8)</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Create Exam Card -->
+            <div class="card">
+                <h2><i class="fas fa-edit"></i> Create New Exam</h2>
+                <form>
+                    <label for="exam-name">Exam Name:</label>
+                    <input type="text" id="exam-name" name="exam-name" placeholder="Enter exam name">
+                    
+                    <label for="course">Course:</label>
+                    <select id="course" name="course">
+                        <option value="">Select a course</option>
+                        <option value="cs101">CS101 - Introduction to Programming</option>
+                        <option value="cs201">CS201 - Data Structures</option>
+                        <option value="cs301">CS301 - Algorithms</option>
+                    </select>
+                    
+                    <label for="exam-date">Exam Date:</label>
+                    <input type="date" id="exam-date" name="exam-date">
+                    
+                    <label for="duration">Duration (minutes):</label>
+                    <input type="number" id="duration" name="duration" placeholder="Enter duration in minutes">
+                    
+                    <label for="instructions">Special Instructions:</label>
+                    <textarea id="instructions" name="instructions" placeholder="Enter any special instructions for students"></textarea>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Create Exam</button>
+                        <button type="reset" class="btn btn-danger"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Manage Questions Card -->
+            <div class="card">
+                <h2><i class="fas fa-question-circle"></i> Manage Questions</h2>
+                <div style="margin-bottom: 1rem; display: flex; gap: 1rem;">
+                    <a href="#add-question" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Question</a>
+                    <a href="#import-questions" class="btn btn-primary"><i class="fas fa-file-import"></i> Import Questions</a>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Question</th>
+                            <th>Type</th>
+                            <th>Course</th>
+                            <th>Difficulty</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Q101</td>
+                            <td>What is the time complexity of binary search?</td>
+                            <td>MCQ</td>
+                            <td>CS201</td>
+                            <td><span class="badge badge-warning">Medium</span></td>
+                            <td>
+                                <a href="#edit" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="#delete" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Q102</td>
+                            <td>Explain the difference between stack and queue.</td>
+                            <td>Essay</td>
+                            <td>CS201</td>
+                            <td><span class="badge badge-success">Easy</span></td>
+                            <td>
+                                <a href="#edit" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="#delete" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Q103</td>
+                            <td>Write a function to reverse a linked list.</td>
+                            <td>Coding</td>
+                            <td>CS301</td>
+                            <td><span class="badge badge-danger">Hard</span></td>
+                            <td>
+                                <a href="#edit" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                                <a href="#delete" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Student Performance Card -->
+            <div class="card">
+                <h2><i class="fas fa-chart-line"></i> Student Performance</h2>
+                <div style="margin-bottom: 1rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <select style="padding: 0.5rem; border-radius: 0.375rem; border: 1px solid #e2e8f0;">
+                        <option>Select Course</option>
+                        <option>CS101 - Introduction to Programming</option>
+                        <option>CS201 - Data Structures</option>
+                        <option>CS301 - Algorithms</option>
+                    </select>
+                    <select style="padding: 0.5rem; border-radius: 0.375rem; border: 1px solid #e2e8f0;">
+                        <option>Select Exam</option>
+                        <option>Midterm Exam</option>
+                        <option>Final Exam</option>
+                        <option>Quiz 1</option>
+                    </select>
+                </div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student ID</th>
+                            <th>Name</th>
+                            <th>Score</th>
+                            <th>Grade</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>S1001</td>
+                            <td>John Doe</td>
+                            <td>85/100</td>
+                            <td>A</td>
+                            <td><span class="badge badge-success">Passed</span></td>
+                            <td><a href="#view" class="btn btn-primary"><i class="fas fa-eye"></i></a></td>
+                        </tr>
+                        <tr>
+                            <td>S1002</td>
+                            <td>Jane Smith</td>
+                            <td>72/100</td>
+                            <td>B</td>
+                            <td><span class="badge badge-success">Passed</span></td>
+                            <td><a href="#view" class="btn btn-primary"><i class="fas fa-eye"></i></a></td>
+                        </tr>
+                        <tr>
+                            <td>S1003</td>
+                            <td>Robert Johnson</td>
+                            <td>48/100</td>
+                            <td>F</td>
+                            <td><span class="badge badge-danger">Failed</span></td>
+                            <td><a href="#view" class="btn btn-primary"><i class="fas fa-eye"></i></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                    <a href="#export-results" class="btn btn-primary"><i class="fas fa-file-export"></i> Export Results</a>
+                    <a href="#publish-grades" class="btn btn-success"><i class="fas fa-check-circle"></i> Publish Grades</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
